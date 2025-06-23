@@ -1,0 +1,53 @@
+body, html, #root, .App {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #f0f0f0; /* A light grey background */
+}
+
+.whiteboard-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+.room-header {
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.room-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #555;
+  font-size: 1rem;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+h1 {
+  text-align: center;
+  color: #222;
+  font-size: 2.5rem;
+  margin-top: 32px;
+  margin-bottom: 24px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
