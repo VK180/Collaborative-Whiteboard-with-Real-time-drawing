@@ -125,7 +125,7 @@ You need to run both the backend server and the frontend client simultaneously i
     ```
     *The frontend will be running on `http://localhost:5173`.*
 
-## ℹ Usage Notes
+## Usage Notes
 
 - **Private Room Sharing:** When you create a private room, you can copy and share the room link with anyone. Anyone with the link can join the room by entering their username.
 - **Active User Indicator:** In the user list, a green symbol appears beside the user who is currently drawing, writing, or performing an action on the whiteboard. This helps everyone see who is actively interacting with the board in real time. 
