@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Room = ({ onGoToPublic, onCreatePrivate }) => {
-    const [username, setUsername] = useState(localStorage.getItem('username') || '');
+const Room = () => {
+    const [username, setUsername] = useState('');
     const [showPrompt, setShowPrompt] = useState(false);
     const [pendingAction, setPendingAction] = useState(null);
+    const navigate = useNavigate();
 
     const handleUsernameSubmit = (e) => {
         e.preventDefault();
         if (username.trim()) {
-            localStorage.setItem('username', username.trim());
             setShowPrompt(false);
-            if (pendingAction === 'private') onCreatePrivate(username.trim());
-            if (pendingAction === 'public') onGoToPublic();
+            if (pendingAction === 'private') {
+                const newRoomId = Math.random().toString(36).substring(2, 8);
+                navigate(`/room/${newRoomId}`, { state: { username: username.trim() } });
+            }
+            if (pendingAction === 'public') {
+                navigate(`/room/public`, { state: { username: username.trim() } });
+            }
         }
     };
 
@@ -41,19 +47,66 @@ const Room = ({ onGoToPublic, onCreatePrivate }) => {
                 animation: 'fadeInBg 1.2s',
             }} />
             {showPrompt && (
-                <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000 }}>
-                    <form onSubmit={handleUsernameSubmit} style={{ background: '#fff', borderRadius: 16, boxShadow: '0 8px 32px 0 rgba(31,38,135,0.18)', padding: '2.5rem 2.5rem 2rem 2.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 320 }}>
-                        <h2 style={{ marginBottom: 18, color: '#2563eb' }}>Enter your username</h2>
+                <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(240,245,255,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000, backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)' }}>
+                    <form
+                        onSubmit={handleUsernameSubmit}
+                        style={{
+                            background: 'rgba(255, 255, 255, 0.25)',
+                            borderRadius: 20,
+                            boxShadow: '0 8px 32px 0 rgba(31,38,135,0.18)',
+                            padding: '2.5rem 2.5rem 2rem 2.5rem',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            minWidth: 340,
+                            border: '1.5px solid rgba(255,255,255,0.35)',
+                            backdropFilter: 'blur(12px)',
+                            WebkitBackdropFilter: 'blur(12px)',
+                            transition: 'box-shadow 0.2s',
+                        }}
+                    >
+                        <h2 style={{ marginBottom: 18, color: '#2563eb', fontWeight: 700, letterSpacing: 0.2 }}>Enter your username</h2>
                         <input
                             type="text"
                             value={username}
                             onChange={e => setUsername(e.target.value)}
                             placeholder="Your name..."
-                            style={{ fontSize: '1.1rem', padding: '12px', borderRadius: 8, border: '1.5px solid #c3cfe2', marginBottom: 18, width: '100%' }}
+                            style={{
+                                fontSize: '1.1rem',
+                                padding: '14px',
+                                borderRadius: 12,
+                                border: '1.5px solid #c3cfe2',
+                                marginBottom: 18,
+                                width: '100%',
+                                background: 'rgba(255,255,255,0.7)',
+                                boxShadow: '0 2px 8px 0 rgba(31,38,135,0.07)',
+                                outline: 'none',
+                                color: '#222',
+                                transition: 'border 0.18s, box-shadow 0.18s',
+                            }}
                             autoFocus
                             maxLength={24}
                         />
-                        <button type="submit" style={{ ...buttonStyle, background: 'linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)', color: '#fff', fontWeight: 700, fontSize: '1.1rem', boxShadow: '0 2px 12px #4facfe33' }}>Continue</button>
+                        <button
+                            type="submit"
+                            style={{
+                                padding: '14px 32px',
+                                borderRadius: 12,
+                                fontSize: '1.1rem',
+                                fontWeight: 700,
+                                border: 'none',
+                                background: 'linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)',
+                                color: '#fff',
+                                boxShadow: '0 2px 12px #4facfe33',
+                                cursor: 'pointer',
+                                transition: 'transform 0.13s, box-shadow 0.18s',
+                            }}
+                            onMouseDown={e => e.currentTarget.style.transform = 'scale(0.97)'}
+                            onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}
+                            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                        >
+                            Continue
+                        </button>
                     </form>
                 </div>
             )}

@@ -8,5 +8,8 @@ export default defineConfig({
     // For simple-peer
     'global': {},
     'process.env': {}
+  },
+  server: {
+    open: true
   }
 })

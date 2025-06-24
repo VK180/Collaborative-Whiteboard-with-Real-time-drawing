@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Routes, Route, useNavigate, useParams } from 'react-router-dom';
+import { Routes, Route, useNavigate, useParams, useLocation } from 'react-router-dom';
 import './App.css'
 import Whiteboard from './components/Whiteboard'
 import Toolbar from './components/Toolbar';
@@ -27,6 +27,7 @@ const HomePage = () => {
 
 const WhiteboardPage = () => {
   const { roomId } = useParams();
+  const location = useLocation();
   const [color, setColor] = useState('#000000');
   const [tool, setTool] = useState('pen');
   const [fontSize, setFontSize] = useState(20);
@@ -36,8 +37,8 @@ const WhiteboardPage = () => {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [creatorId, setCreatorId] = useState('');
-  const [username, setUsername] = useState(localStorage.getItem('username') || '');
-  const [showPrompt, setShowPrompt] = useState(!localStorage.getItem('username'));
+  const [username, setUsername] = useState(location.state?.username || '');
+  const [showPrompt, setShowPrompt] = useState(!location.state?.username);
   const [activeUserId, setActiveUserId] = useState(null);
 
   useEffect(() => {
@@ -49,7 +50,6 @@ const WhiteboardPage = () => {
       function joinRoom() {
         if (joined) return;
         joined = true;
-        localStorage.setItem('username', username.trim());
         socket.emit('join-room', roomId, username.trim(), (success) => {
           if (!success) {
             alert('Room does not exist!');
@@ -149,19 +149,66 @@ const WhiteboardPage = () => {
 
   if (showPrompt) {
     return (
-      <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000 }}>
-        <form onSubmit={e => { e.preventDefault(); if (username.trim()) { setShowPrompt(false); } }} style={{ background: '#fff', borderRadius: 16, boxShadow: '0 8px 32px 0 rgba(31,38,135,0.18)', padding: '2.5rem 2.5rem 2rem 2.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 320 }}>
-          <h2 style={{ marginBottom: 18, color: '#2563eb' }}>Enter your username</h2>
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(240,245,255,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000, backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)' }}>
+        <form
+          onSubmit={e => { e.preventDefault(); if (username.trim()) { setShowPrompt(false); } }}
+          style={{
+            background: 'rgba(255, 255, 255, 0.25)',
+            borderRadius: 20,
+            boxShadow: '0 8px 32px 0 rgba(31,38,135,0.18)',
+            padding: '2.5rem 2.5rem 2rem 2.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            minWidth: 340,
+            border: '1.5px solid rgba(255,255,255,0.35)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            transition: 'box-shadow 0.2s',
+          }}
+        >
+          <h2 style={{ marginBottom: 18, color: '#2563eb', fontWeight: 700, letterSpacing: 0.2 }}>Enter your username</h2>
           <input
             type="text"
             value={username}
             onChange={e => setUsername(e.target.value)}
             placeholder="Your name..."
-            style={{ fontSize: '1.1rem', padding: '12px', borderRadius: 8, border: '1.5px solid #c3cfe2', marginBottom: 18, width: '100%' }}
+            style={{
+              fontSize: '1.1rem',
+              padding: '14px',
+              borderRadius: 12,
+              border: '1.5px solid #c3cfe2',
+              marginBottom: 18,
+              width: '100%',
+              background: 'rgba(255,255,255,0.7)',
+              boxShadow: '0 2px 8px 0 rgba(31,38,135,0.07)',
+              outline: 'none',
+              color: '#222',
+              transition: 'border 0.18s, box-shadow 0.18s',
+            }}
             autoFocus
             maxLength={24}
           />
-          <button type="submit" style={{ padding: '12px 25px', fontSize: '1rem', borderRadius: '8px', cursor: 'pointer', width: '100%', border: 'none', fontWeight: '600', background: 'linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)', color: '#fff' }}>Continue</button>
+          <button
+            type="submit"
+            style={{
+              padding: '14px 32px',
+              borderRadius: 12,
+              fontSize: '1.1rem',
+              fontWeight: 700,
+              border: 'none',
+              background: 'linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)',
+              color: '#fff',
+              boxShadow: '0 2px 12px #4facfe33',
+              cursor: 'pointer',
+              transition: 'transform 0.13s, box-shadow 0.18s',
+            }}
+            onMouseDown={e => e.currentTarget.style.transform = 'scale(0.97)'}
+            onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+          >
+            Continue
+          </button>
         </form>
       </div>
     );
