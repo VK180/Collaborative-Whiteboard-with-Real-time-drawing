@@ -1,7 +1,9 @@
 import { io } from 'socket.io-client';
 
-// "undefined" means the URL will be computed from the `window.location` object
-const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:3001';
+// Use Render backend URL in production, localhost in development
+const URL = process.env.NODE_ENV === 'production'
+  ? 'https://collaborative-whiteboard-with-real-time-ir8n.onrender.com'
+  : 'http://localhost:3001';
 
 export const socket = io(URL, {
     autoConnect: false
