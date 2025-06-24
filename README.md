@@ -92,7 +92,6 @@ The backend server requires a MongoDB connection string to function. This is pro
     - **For development and deployment to services like Render or Vercel, you must add `0.0.0.0/0` to the IP Access List.**
     - This allows connections from any IP address, which is necessary because cloud platforms use dynamic IPs that cannot be predicted in advance.
     - **If you do not add `0.0.0.0/0`, your app may fail to connect to MongoDB Atlas, resulting in connection errors.**
-    - (For production, restrict access to trusted IPs only for security.)
 
 5.  **Create the `.env` File:**
     - Navigate to the `server` directory in your project.
