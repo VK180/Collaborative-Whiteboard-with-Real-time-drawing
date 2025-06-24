@@ -1,6 +1,6 @@
 # Collaborative Real-time Whiteboard
 
-A full-stack web application that provides a real-time, multi-user collaborative whiteboard experience. Users can create public or private rooms, draw together, and communicate via chat. The application is built with the MERN stack (MongoDB, Express, React, Node.js) and utilizes WebSockets for instantaneous communication.
+A full-stack web application that provides a real-time, multi-user collaborative whiteboard experience. Users can create public or private rooms, draw together, and communicate via chat. The application is built with MongoDB, React, fabric.js ,Node.js and utilizes WebSockets for instantaneous communication.
 
 ##  Features
 
@@ -23,10 +23,10 @@ A full-stack web application that provides a real-time, multi-user collaborative
 
 [**https://collaborative-whiteboard-with-real-sable.vercel.app/**](https://collaborative-whiteboard-with-real-sable.vercel.app/)
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
-*   **Frontend:** React, Vite, Fabric.js, Socket.IO Client
-*   **Backend:** Node.js, Express, Socket.IO
+*   **Frontend:** React, Vite, Fabric.js
+*   **Backend:** Node.js, Socket.IO
 *   **Database:** MongoDB Atlas
 *   **Deployment:** Vercel (Frontend), Render (Backend)
 
