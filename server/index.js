@@ -40,9 +40,14 @@ const Room = mongoose.model('Room', roomSchema);
 
 const server = http.createServer(app);
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://collaborative-whiteboard-with-real-sable.vercel.app"
+];
+
 const io = new Server(server, {
   cors: {
-    origin: "https://collaborative-whiteboard-with-real-sable.vercel.app",
+    origin: allowedOrigins,
     methods: ["GET", "POST"]
   }
 });
