@@ -42,7 +42,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*", // Adjust for production
+    origin: "https://collaborative-whiteboard-with-real-sable.vercel.app",
     methods: ["GET", "POST"]
   }
 });
